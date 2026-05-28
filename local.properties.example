@@ -30,3 +30,13 @@ EXTRACTION_BASE_URL_DEBUG=http://10.0.2.2:3000/
 # API key for the extraction service. Must match Render env var API_KEY.
 # Used by the Android client as the X-API-Key header.
 #EXTRACTION_API_KEY=replace-with-strong-random-string
+
+# ----------------------------------------------------------------------
+# Release signing (Play Store upload key)
+# ----------------------------------------------------------------------
+# Path is relative to repo root. Keystore + this file are gitignored.
+# Lose this keystore and Play Store updates are locked forever — back it up.
+#RELEASE_STORE_FILE=keystore/reelgrab-release.jks
+#RELEASE_STORE_PASSWORD=your-keystore-password
+#RELEASE_KEY_ALIAS=reelgrab
+#RELEASE_KEY_PASSWORD=your-key-password

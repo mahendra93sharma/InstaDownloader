@@ -4,7 +4,7 @@ FROM node:20-alpine
 # video+audio streams. ca-certificates so HTTPS to platform CDNs works.
 # yt-dlp is pinned — bump deliberately and rebuild; floating "latest"
 # breaks extraction every few weeks when platforms change HTML.
-ARG YTDLP_VERSION=2025.01.26
+ARG YTDLP_VERSION=2026.03.17
 RUN apk add --no-cache python3 py3-pip ffmpeg ca-certificates wget \
   && pip3 install --no-cache-dir --break-system-packages "yt-dlp==${YTDLP_VERSION}" \
   && yt-dlp --version
