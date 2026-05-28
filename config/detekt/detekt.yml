@@ -1,0 +1,103 @@
+# Detekt configuration overrides on top of the default ruleset (buildUponDefaultConfig = true).
+# Keep this small — disable / relax only what is noisy for Compose + DI codebases.
+
+build:
+  maxIssues: 0
+  excludeCorrectable: false
+  weights:
+
+console-reports:
+  active: true
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+
+complexity:
+  active: true
+  LongParameterList:
+    active: true
+    functionThreshold: 8
+    constructorThreshold: 10
+    ignoreDefaultParameters: true
+    ignoreDataClasses: true
+    ignoreAnnotated:
+      - 'Composable'
+      - 'Preview'
+  TooManyFunctions:
+    active: false
+  LongMethod:
+    active: true
+    threshold: 80
+    ignoreAnnotated:
+      - 'Composable'
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 20
+  NestedBlockDepth:
+    active: true
+    threshold: 6
+
+style:
+  active: true
+  MagicNumber:
+    active: false
+  MaxLineLength:
+    active: false
+  ReturnCount:
+    active: true
+    max: 10
+    excludeReturnFromLambda: true
+    excludeGuardClauses: true
+  WildcardImport:
+    active: false
+  UnusedPrivateMember:
+    active: true
+    ignoreAnnotated:
+      - 'Preview'
+      - 'Composable'
+  ForbiddenComment:
+    active: false
+  UnnecessaryAbstractClass:
+    active: false
+  FunctionOnlyReturningConstant:
+    active: false
+  DataClassContainsFunctions:
+    active: false
+  UseDataClass:
+    active: false
+
+naming:
+  active: true
+  FunctionNaming:
+    active: true
+    ignoreAnnotated:
+      - 'Composable'
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][A-Za-z0-9_]*'
+  MatchingDeclarationName:
+    active: false
+
+empty-blocks:
+  active: true
+  EmptyFunctionBlock:
+    active: true
+    ignoreOverridden: true
+
+exceptions:
+  active: true
+  TooGenericExceptionCaught:
+    active: false
+  SwallowedException:
+    active: false
+  InstanceOfCheckForException:
+    active: false
+
+potential-bugs:
+  active: true
+
+performance:
+  active: true

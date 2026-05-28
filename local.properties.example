@@ -1,0 +1,32 @@
+# Copy to local.properties (gitignored) and edit. Picked up by
+# core/network/build.gradle.kts.
+
+# Android SDK — usually written by Android Studio on first sync.
+#sdk.dir=/Users/you/Library/Android/sdk
+
+# ----------------------------------------------------------------------
+# Extraction service base URL (must end with "/")
+# ----------------------------------------------------------------------
+# Emulator on the same machine running `npm start`:
+EXTRACTION_BASE_URL_DEBUG=http://10.0.2.2:3000/
+
+# Physical device on the same Wi-Fi:
+#   1. Run `./extraction-service/expose.sh lan` to grab the LAN IP.
+#   2. Replace below.
+#EXTRACTION_BASE_URL_DEBUG=http://192.168.1.42:3000/
+
+# Physical device anywhere (cloudflared / ngrok tunnel):
+#   1. Run `./extraction-service/expose.sh cloudflared`
+#   2. Paste the https://*.trycloudflare.com URL below (https = no cleartext rule needed).
+#EXTRACTION_BASE_URL_DEBUG=https://<your-subdomain>.trycloudflare.com/
+
+# Production / staging (release builds). Must be HTTPS.
+#EXTRACTION_BASE_URL_RELEASE=https://reelgrab-extractor.your-domain.com/
+
+# Render deploy example (replace <slug> after first deploy):
+#EXTRACTION_BASE_URL_DEBUG=https://reelgrab-extractor-<slug>.onrender.com/
+#EXTRACTION_BASE_URL_RELEASE=https://reelgrab-extractor-<slug>.onrender.com/
+
+# API key for the extraction service. Must match Render env var API_KEY.
+# Used by the Android client as the X-API-Key header.
+#EXTRACTION_API_KEY=replace-with-strong-random-string

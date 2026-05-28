@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Exclude transient media caches from auto-backup and device-transfer.
+    The Room history DB IS backed up by default (small, useful continuity);
+    binary caches are local and rehydratable.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="media_cache/" />
+        <exclude domain="external" path="ReelGrab/cache/" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="media_cache/" />
+        <exclude domain="external" path="ReelGrab/cache/" />
+    </device-transfer>
+</data-extraction-rules>

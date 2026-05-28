@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Adaptive-icon foreground. 108dp viewport with a 72dp safe zone (M3 spec).
+    Simple "play" glyph keyed to the brand primary on white; replace via
+    Image Asset Studio once the brand mark is final.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M42,36 L42,72 L72,54 Z" />
+</vector>

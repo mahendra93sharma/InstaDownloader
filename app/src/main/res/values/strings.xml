@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ReelGrab</string>
+
+    <!-- First-launch disclaimer -->
+    <string name="disclaimer_title">Use responsibly</string>
+    <string name="disclaimer_body">Only download content you own or are authorised to save. ReelGrab is not affiliated with Instagram or Facebook.</string>
+    <string name="disclaimer_accept">I understand</string>
+
+    <!-- Home -->
+    <string name="home_input_placeholder">Enter Instagram or Facebook URL</string>
+    <string name="home_paste_hint">Paste link from clipboard</string>
+    <string name="home_fetch_cta">Fetch</string>
+
+    <!-- Preview -->
+    <string name="preview_title">Preview</string>
+    <string name="preview_download_cta">Download</string>
+</resources>

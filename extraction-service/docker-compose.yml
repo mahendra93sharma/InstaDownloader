@@ -1,0 +1,11 @@
+services:
+  extractor:
+    build: .
+    image: reelgrab-extractor:dev
+    container_name: reelgrab-extractor
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    restart: unless-stopped

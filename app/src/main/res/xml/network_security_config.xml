@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Default: TLS only, no cleartext anywhere. -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!--
+        Debug overrides: trust user CAs (Charles / mitmproxy) AND permit cleartext
+        on every host. Why broad? On a physical device EXTRACTION_BASE_URL_DEBUG
+        points at the dev machine's LAN IP (e.g. 192.168.x.x) — Android's netsec
+        config has no CIDR syntax, so we can't enumerate every possible address.
+        Scope is still safe because <debug-overrides> only applies to
+        debuggable APKs; release builds keep the locked-down base-config.
+    -->
+    <debug-overrides cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+
+    <!-- Emulator + loopback always cleartext, even on release, for QA builds. -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>

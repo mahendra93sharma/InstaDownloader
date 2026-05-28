@@ -1,0 +1,46 @@
+# Render Blueprint for ReelGrab extractor.
+#
+# Deploy steps:
+#   1. Push this repo to GitHub.
+#   2. In Render: New + → Blueprint → pick the repo → root = "extraction-service".
+#   3. Render reads this file, builds the Dockerfile, and exposes the service.
+#   4. Set the API_KEY env value in the Render dashboard (marked sync:false below).
+#
+# Plan note: "starter" is the cheapest paid tier that does NOT sleep. Free tier
+# also works but spins down after 15 min idle → 30–60s cold start on first hit.
+# Bump to "standard" if memory pressure shows up (yt-dlp + ffmpeg can spike).
+
+services:
+  - type: web
+    name: reelgrab-extractor
+    runtime: docker
+    plan: starter
+    region: oregon
+    rootDir: extraction-service
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: YTDLP_TIMEOUT_MS
+        value: 60000
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 60000
+      - key: RATE_LIMIT_MAX
+        value: 30
+      # Set in the Render dashboard. Required for the Android client to call /resolve.
+      - key: API_KEY
+        sync: false
+      # Optional. Lock CORS to your app/site origin(s); comma separated. "*" for any.
+      - key: CORS_ORIGINS
+        value: "*"
+      # Optional. Path to a Netscape cookies.txt mounted via Render Secret Files,
+      # e.g. /etc/secrets/instagram-cookies.txt. Highly recommended for IG.
+      - key: YTDLP_COOKIES_PATH
+        sync: false
+      # Optional. Residential proxy URL (http://user:pass@host:port).
+      - key: YTDLP_PROXY
+        sync: false
