@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import android.os.Build
 import com.reelgrab.core.ui.permission.rememberPermissionGuardedAction
 import kotlinx.coroutines.launch
 
@@ -55,12 +56,22 @@ fun PreviewScreen(
     // Holds the next download event waiting for permission resolution.
     var pendingDownload by remember { mutableStateOf<PreviewEvent?>(null) }
 
+    val (rationaleTitle, rationaleMessage) = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ->
+            "Show download progress?" to
+                "Allow notifications so ReelGrab can show progress and a tap-to-open chip when your download finishes. Downloads work either way."
+        Build.VERSION.SDK_INT <= Build.VERSION_CODES.P ->
+            "Storage permission needed" to
+                "ReelGrab needs storage access to save downloaded media to your gallery."
+        else -> "Permission needed" to "ReelGrab needs this permission to download media."
+    }
+
     val guardedDispatch = rememberPermissionGuardedAction(
-        rationaleTitle = "Permission needed",
-        rationaleMessage = "ReelGrab needs this permission to show download progress and save media to your gallery.",
+        rationaleTitle = rationaleTitle,
+        rationaleMessage = rationaleMessage,
         onDenied = {
             pendingDownload = null
-            scope.launch { snackbarHostState.showSnackbar("Permission required to download") }
+            scope.launch { snackbarHostState.showSnackbar("Storage permission required to save downloads") }
         },
         action = {
             pendingDownload?.let(viewModel::onEvent)

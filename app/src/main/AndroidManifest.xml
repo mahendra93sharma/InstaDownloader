@@ -35,6 +35,36 @@
             </intent-filter>
         </activity>
 
+        <!--
+            Disable the default WorkManager auto-init so our Application's
+            Configuration.Provider (with HiltWorkerFactory) is the only init path.
+            Without this, WorkManager initialises early with the default factory
+            and DownloadWorker fails to instantiate (no no-arg constructor).
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+        <!--
+            WorkManager's SystemForegroundService is declared in the androidx.work
+            AAR without a foregroundServiceType. Android 14+ requires the service
+            element to declare every type passed to startForeground(). Our
+            DownloadWorker uses FOREGROUND_SERVICE_TYPE_DATA_SYNC, so we merge that
+            attribute onto the library's <service> entry. Without this the worker
+            crashes with "foregroundServiceType 0x00000001 is not a subset...".
+        -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
+
     </application>
 
 </manifest>
